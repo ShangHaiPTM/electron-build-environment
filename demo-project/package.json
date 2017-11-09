@@ -20,7 +20,7 @@
     "lint-styles": "stylelint app/*.css app/components/*.css --syntax scss",
     "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
     "package": "npm run build && build --publish never",
-    "package-all": "npm run build && electron-builder install-app-deps && build -mwl",
+    "package-all": "npm run build && electron-builder install-app-deps && build -m && build -l && build -w --x64 && build -w --ia32",
     "package-mac": "npm run build && electron-builder install-app-deps && build -m",
     "package-linux": "npm run build && electron-builder install-app-deps && build --linux",
     "package-win": "npm run build && electron-builder install-app-deps && build --win --x64",
