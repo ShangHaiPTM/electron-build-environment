@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Counter.css';
 
-class Counter extends Component {
-  props: {
-    increment: () => void,
-    incrementIfOdd: () => void,
-    incrementAsync: () => void,
-    decrement: () => void,
-    counter: number
-  };
+type CounterProps = {
+  increment: () => void,
+  incrementIfOdd: () => void,
+  incrementAsync: () => void,
+  decrement: () => void,
+  counter: number
+};
 
+class Counter extends Component<CounterProps> {
   render() {
     const { increment, incrementIfOdd, incrementAsync, decrement, counter } = this.props;
     return (
@@ -32,7 +32,11 @@ class Counter extends Component {
             <i className="fa fa-minus" />
           </button>
           <button className={styles.btn} onClick={incrementIfOdd} data-tclass="btn">odd</button>
-          <button className={styles.btn} onClick={() => incrementAsync()} data-tclass="btn">async</button>
+          <button
+            className={styles.btn}
+            onClick={() => incrementAsync()}
+            data-tclass="btn"
+          >async</button>
         </div>
       </div>
     );

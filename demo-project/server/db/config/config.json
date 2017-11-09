@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "thinknet",
+    "password": "123456",
+    "database": "credibility_analyzer_dev",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "thinknet",
+    "password": "123456",
+    "database": "credibility_analyzer_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "thinknet",
+    "password": "123456",
+    "database": "credibility_analyzer_prod",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

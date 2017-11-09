@@ -1,15 +1,29 @@
-/* eslint flowtype-errors/show-errors: 0 */
-import React from 'react';
-import { Switch, Route } from 'react-router';
+// @flow
 import App from './containers/App';
-import HomePage from './containers/HomePage';
+import HomePage from './features/home-page/HomePage';
 import CounterPage from './containers/CounterPage';
+import ErrorPage from './features/error-page/ErrorPage';
 
-export default () => (
-  <App>
-    <Switch>
-      <Route path="/counter" component={CounterPage} />
-      <Route path="/" component={HomePage} />
-    </Switch>
-  </App>
-);
+export default [
+  {
+    component: App,
+    routes: [
+      {
+        path: '/counter',
+        component: CounterPage
+      },
+      {
+        path: '/',
+        component: HomePage
+      },
+      // {
+      //   path: '/login',
+      //   component: LoginPage
+      // },
+      {
+        path: '/error',
+        component: ErrorPage
+      }
+    ]
+  }
+];

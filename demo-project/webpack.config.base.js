@@ -4,10 +4,15 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import { dependencies as externals } from './app/package.json';
+
+let defaultExt = ['.js', '.jsx', '.json'];
+if (process.env.NODE_ENV === 'production') {
+  defaultExt = ['.prod.js', '.prod.jsx', ...defaultExt];
+} else {
+  defaultExt = ['.dev.js', '.dev.jsx', ...defaultExt];
+}
 
 export default {
-  externals: Object.keys(externals || {}),
 
   module: {
     rules: [{
@@ -33,7 +38,7 @@ export default {
    * Determine the array of extensions that should be used to resolve modules.
    */
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: defaultExt,
     modules: [
       path.join(__dirname, 'app'),
       'node_modules',
@@ -42,7 +47,8 @@ export default {
 
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+      'process.env.SERVER_PATH': JSON.stringify('http://localhost:3000')
     }),
 
     new webpack.NamedModulesPlugin(),

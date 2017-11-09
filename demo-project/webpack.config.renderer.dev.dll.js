@@ -5,13 +5,14 @@
 import webpack from 'webpack';
 import path from 'path';
 import merge from 'webpack-merge';
+import _ from 'lodash';
 import baseConfig from './webpack.config.base';
-import { dependencies } from './package.json';
+import { dllDependencies } from './package.json';
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
 
 CheckNodeEnv('development');
 
-const dist = path.resolve(process.cwd(), 'dll');
+const dist = path.resolve(process.cwd(), 'dist/dll');
 
 export default merge.smart(baseConfig, {
   context: process.cwd(),
@@ -57,45 +58,6 @@ export default merge.smart(baseConfig, {
               localIdentName: '[name]__[local]__[hash:base64:5]',
             }
           },
-        ]
-      },
-      // Add SASS support  - compile all .global.scss files and pipe it to style.css
-      {
-        test: /\.global\.scss$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-            },
-          },
-          {
-            loader: 'sass-loader'
-          }
-        ]
-      },
-      // Add SASS support  - compile all other .scss files and pipe it to style.css
-      {
-        test: /^((?!\.global).)*\.scss$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
-            }
-          },
-          {
-            loader: 'sass-loader'
-          }
         ]
       },
       // WOFF Font
@@ -163,9 +125,10 @@ export default merge.smart(baseConfig, {
 
   entry: {
     renderer: (
-      Object
-        .keys(dependencies || {})
-        .filter(dependency => dependency !== 'font-awesome')
+      _(dllDependencies).entries()
+        .filter(e => e[1])
+        .map(e => e[0])
+        .value()
     )
   },
 
@@ -192,7 +155,8 @@ export default merge.smart(baseConfig, {
      * development checks
      */
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      'process.env.SERVER_PATH': JSON.stringify('http://localhost:3000'),
     }),
 
     new webpack.LoaderOptionsPlugin({
@@ -200,7 +164,7 @@ export default merge.smart(baseConfig, {
       options: {
         context: path.resolve(process.cwd(), 'app'),
         output: {
-          path: path.resolve(process.cwd(), 'dll'),
+          path: path.resolve(process.cwd(), 'dist/dll'),
         },
       },
     })
