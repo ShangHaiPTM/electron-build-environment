@@ -17,6 +17,11 @@ function buildAppPackage() {
     productName: pkg.productName,
     version: pkg.version,
     description: pkg.description,
+    homepage: pkg.homepage,
+    licence: pkg.licence,
+    author: pkg.author,
+    repository: pkg.repository,
+    build: pkg.build,
     main: './main.prod.js',
     scripts: {
       postinstall: 'npm rebuild --runtime=electron' +

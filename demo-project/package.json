@@ -3,6 +3,12 @@
   "productName": "CFDCredibilityAnalyzer",
   "version": "1.0.0",
   "description": "CFD软件可信性分析工具",
+  "homepage": "http://www.p2m.net.cn",
+  "license": "GPLv3",
+  "author": {
+    "name": "Colin Han",
+    "email": "dev@p2m.net.cn"
+  },
   "scripts": {
     "build": "concurrently \"npm run build-app-main\" \"npm run build-app-renderer\" \"npm run build-app-misc\" \"npm run build-web-client\"",
     "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
